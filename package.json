@@ -1,11 +1,11 @@
 {
     "name": "thinui2",
-    "version": "0.1.2",
+    "version": "0.1.5",
     "description": "A UI framework for thinjs.",
-    "main": "bin/thin-cli.js",
+    "main": "bin/thinui-cli.js",
     "preferGlobal": true,
     "bin": {
-        "thinui": "./bin/thin-cli.js"
+        "thinui": "./bin/thinui-cli.js"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
