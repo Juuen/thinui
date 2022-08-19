@@ -1,11 +1,14 @@
 {
-  "name": "thinui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "juuen",
-  "license": "MIT"
+    "name": "thinui",
+    "version": "1.0.0",
+    "description": "",
+    "main": "bin/thinui-cli.js",
+    "bin": {
+        "thinui": "./bin/thinui-cli.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "juuen",
+    "license": "MIT"
 }
