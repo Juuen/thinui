@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "A UI framework for thinjs.",
     "main": "bin/thinui-cli.js",
+    "preferGlobal": true,
     "bin": {
         "thinui": "./bin/thinui-cli.js"
     },
