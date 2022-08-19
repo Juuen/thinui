@@ -1,8 +1,31 @@
 #!/usr/bin/env node
-
+const parseArgs = require("minimist");
 const path = require("path");
 
-main({}, exit);
+// parse args
+var unknown = [];
+var args = parseArgs(process.argv.slice(2), {
+    alias: {
+        c: "css",
+        e: "ejs",
+        f: "force",
+        h: "help",
+        H: "hogan",
+        v: "view"
+    },
+    boolean: ["ejs", "force", "git", "hbs", "help", "hogan", "pug", "version"],
+    default: { css: true, view: true },
+    string: ["css", "view"],
+    unknown: function (s) {
+        if (s.charAt(0) === "-") {
+            unknown.push(s);
+        }
+    }
+});
+
+args["!"] = unknown;
+
+main(args, exit);
 
 /**
  * Graceful exit for async STDIO

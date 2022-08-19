@@ -1,15 +1,18 @@
 {
     "name": "thinui2",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "A UI framework for thinjs.",
-    "main": "bin/thinui-cli.js",
+    "main": "bin/thin-cli.js",
     "preferGlobal": true,
     "bin": {
-        "thinui": "./bin/thinui-cli.js"
+        "thinui": "./bin/thin-cli.js"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "juuen",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "minimist": "^1.2.6"
+    }
 }
