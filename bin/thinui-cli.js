@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const parseArgs = require("minimist");
 const path = require("path");
 const { mkdir, access, readdir, copyFile } = require("fs/promises");
@@ -11,21 +12,27 @@ const TEMPLATE_DIR = path.join(__dirname, "..", "templates");
 const VERSION = require("../package").version;
 
 // parse args
-let unknown = [];
-let options = parseArgs(process.argv.slice(2), {
-    alias: {
-        h: "help",
-        v: "version"
-    },
-    unknown: function (s) {
-        if (s.charAt(0) === "-") unknown.push(s);
-    }
-});
-
+let unknown = [],
+    options = parseArgs(process.argv.slice(2), {
+        alias: {
+            h: "help",
+            v: "version"
+        },
+        unknown: function (s) {
+            if (s.charAt(0) === "-") unknown.push(s);
+        }
+    });
 options["!"] = unknown;
 
+/**
+ * 运行主程序
+ */
 main(options);
 
+/**
+ * 定义主程序
+ * @param {Array} argv
+ */
 async function main(argv) {
     if (argv["!"].length > 0) {
         console.error(`unknown option "${options["!"][0]}"`);
@@ -85,12 +92,15 @@ async function loadTemplate(destpath) {
     }
 }
 
+/**
+ * 帮助信息
+ */
 function help() {
     console.log("");
-    console.log("  Usage: thinui [options] [dir]");
+    console.log("  Usage: thinui [options]");
     console.log("");
     console.log("  Options:");
     console.log("");
     console.log("    -v, --version           output the version number");
-    console.log("    -h, --help              output help information");
+    console.log("    -h, --help              output the help information");
 }
