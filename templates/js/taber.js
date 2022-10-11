@@ -42,7 +42,7 @@ thinui.taber = function (options) {
                             if (isTabArray) data.change(e);
                             else {
                                 e.reRender = data.tabs[e.org_data];
-                                Object.prototype.toString.call(e.reRender) === "[object Function]" && e.reRender(e.container);
+                                Object.prototype.toString.call(e.reRender) === "[object Function]" && e.reRender(e.container, data);
                             }
                             ssname && thinui.utils.setss(ssname, tabNames.indexOf(e.org_data));
                         }
@@ -53,7 +53,7 @@ thinui.taber = function (options) {
                         if (isTabArray) data.change({ container: r.container, org_data: tabNames[tabindex] });
                         else {
                             r.reRender = data.tabs[tabNames[tabindex]];
-                            Object.prototype.toString.call(r.reRender) === "[object Function]" && r.reRender(r.container);
+                            Object.prototype.toString.call(r.reRender) === "[object Function]" && r.reRender(r.container, data);
                         }
                     }
                 }
