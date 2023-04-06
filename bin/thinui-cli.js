@@ -46,13 +46,17 @@ async function main(argv) {
 
         let thinDir = await checkThinDir(projectPath),
             thinuiDir = "",
-            typesDir = projectPath.concat("node_modules/@types/thinui2");
+            typesDir = projectPath.concat("node_modules/@types/thinui2"),
+            stylesDir = projectPath.concat("public/thinui");
 
         thinuiDir = thinDir ? `${thinDir}/thinui` : `${projectPath}/thinbuilder/thinui`;
 
         try {
             await mkdir(thinuiDir, { recursive: true, mode: MODE_0755 });
             await loadTemplate(thinuiDir);
+
+            await mkdir(stylesDir, { recursive: true, mode: MODE_0755 });
+            await loadStyles(stylesDir);
 
             await mkdir(typesDir, { recursive: true, mode: MODE_0755 });
             await loadTypes(typesDir);
@@ -93,6 +97,18 @@ async function loadTemplate(destpath) {
     const files = await readdir(js_path, { withFileTypes: true });
     for (const file of files) {
         if (file.isFile()) await copyFile(`${js_path}/${file.name}`, `${destpath}/${file.name}`);
+    }
+}
+
+/**
+ * 加载样式模板
+ * @param {String} destpath
+ */
+async function loadStyles(destpath) {
+    let css_path = path.join(TEMPLATE_DIR, "css");
+    const files = await readdir(css_path, { withFileTypes: true });
+    for (const file of files) {
+        if (file.isFile()) await copyFile(`${css_path}/${file.name}`, `${destpath}/${file.name}`);
     }
 }
 

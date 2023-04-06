@@ -1,23 +1,24 @@
 /**
  * 数据分页
  * @param {Object} options
- * @container            分页容器，默认为pager标签。
- * @data                 分页控件参数集合，包含所有输入参数，包括ddd返回结果。
- * @data [showSummary]   显示数据总数，默认为false。
- * @data [showJumper]    显示跳转，默认为false。
- * @data [step]          步长，默认为2，即中间显示5个页码。
- * @data [pagecount]     总页数，默认不足两页不显示分页控件。
- * @data [page]          页码，默认为1。
- * @data [pagesize]      页长，默认为10，即显示10条数据。
- * @data [container]     回调函数容器，用来渲染数据列表。
- * @data [reRender]      渲染数据列表函数，当发生页码变化时候会调用该函数更新数据列表。例：reRender(container,data)。
+ * @container              分页容器，默认为pager标签。
+ * @data                   分页控件参数集合，包含所有输入参数，包括ddd返回结果。
+ * @data [pagecount]       总页数，默认不足两页不显示分页控件。
+ * @data [page]            页码，默认为1。
+ * @data [pagesize]        页长，默认为10，即显示10条数据。
+ * @data [showSummary]     显示数据总数，默认为false。
+ * @data [showJumper]      显示跳转，默认为false。
+ * @data [showSinglePage]  当页码不足或等于一页的时候是否展示，默认为true。
+ * @data [step]            步长，默认为2，即中间显示5个页码。
+ * @data [container]       回调函数容器，用来渲染数据列表。
+ * @data [reRender]        渲染数据列表函数，当发生页码变化时候会调用该函数更新数据列表。例：reRender(container,data)。
  */
 thinui.pager = function (options) {
     let { data } = options || {};
     if (!data) throw "thin-pager没有配置参数[data]！";
     if (!data.container) throw "thin-pager没有配置参数[data.container]！";
     if (!data.reRender || Object.prototype.toString.call(data.reRender) !== "[object Function]") throw "thin-pager没有配置参数[data.reRender]！";
-    if (!(data.pagecount > 1)) return; // 不足2页不予显示，起码2页分页显示才有意义
+    if (data.showSinglePage === false && !(data.pagecount > 1)) return;
 
     data.step = data.step || 2; // 前后步长,默认步长为2，即中间显示5页
     data.showSummary = data.showSummary || false; // 显示总数信息
@@ -44,6 +45,7 @@ thinui.pager = function (options) {
         pageRangeStart = pageRangeEnd - data.step * 2;
         if (pageRangeStart <= 1) pageRangeStart = data.step;
     }
+
     while (pageRangeStart <= pageRangeEnd) {
         plist.push(pageRangeStart);
         pageRangeStart++;
@@ -106,7 +108,7 @@ thinui.pager = function (options) {
                             if (d.data === ">") return `<i>${d.data}</i>`;
                             else return d.data;
                         },
-                        data: [pagecount, ">"],
+                        data: pagecount > 1 ? [pagecount, ">"] : [">"],
                         click: function (e) {
                             if (e.sender.classList.contains("active")) return;
                             let pageText = e.sender.innerText;
@@ -130,7 +132,7 @@ thinui.pager = function (options) {
                         event: {
                             keydown: function (r) {
                                 let gotoPage = r.sender.value;
-                                if (!(gotoPage >= 1 && gotoPage <= pagecount)) gotoPage = page;
+                                if (!(1 <= gotoPage && gotoPage <= pagecount)) gotoPage = page;
                                 r.event.keyCode === 13 && data.reRender(data.container, { ...data, page: gotoPage });
                             }
                         }

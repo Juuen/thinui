@@ -2,24 +2,32 @@
  * 模态对话框
  * @param {Object} options
  * @title        对话框标题，如果为空，则隐藏标题栏。
- * @draggable    是否启用拖拽，默认为true。
- * @confirm      确认按钮，值为对象时，包含title（按钮文字）,finish（回调函数）；值为函数时等效于confirm.finish。
- *               回调参数内置close()方法用来关闭对话框。当foot为false时可以不需要填写该参数。
- * @cancel       取消按钮回调函数。
  * @content      对话框内容回调函数。
- * @foot         对话框底栏回调函数，默认null。允许用户自定义底栏。当赋值为false时表示隐藏对话框底部栏。
+ * @foot         对话框底栏回调函数，默认null，允许用户自定义底栏，当赋值为false时表示隐藏对话框底栏。
+ * @confirm      确认按钮，值为对象时，包含title（按钮文字）、finish（回调函数）；值为函数时等效于confirm.finish。
+ *               回调参数内置close()方法用来关闭对话框、refresh()方法用来恢复按钮状态（防抖）
+ *               当foot为false时可以不需要填写该参数。
+ * @cancel       取消按钮回调函数。
+ * @draggable    是否启用拖拽，默认为true。
  * @width        对话框宽度，默认为60%。
- * @top          对话框离顶部距离，仅支持百分比数值，默认为12%。
+ * @top          对话框离顶部距离，支持%、px，默认为12%。
+ * @style        对话框css样式。
  */
 thinui.dialog = function (options) {
-    let { container, data, title, cancel, confirm, content, foot, draggable, width, top } = options || {};
+    let { container, data, title, cancel, confirm, content, foot, draggable, width, top, style } = options || {},
+        topSpacing;
     if (!confirm && foot !== false) throw "thin-dialog没有配置参数[confirm]！";
     if (!content || Object.prototype.toString.call(content) !== "[object Function]") throw "thin-dialog参数[content]为函数！";
     if (!container) container = document.body;
     if (!(draggable === false)) draggable = true;
 
-    if ((top || "").includes("%")) top = top.replace("%", "") / 100;
-    else top = 0.12;
+    style = style || {};
+    style.width = width || style.width || "60%";
+    style["margin-top"] = top || style["margin-top"] || "12%";
+
+    if ((style["margin-top"] || "").includes("%")) topSpacing = style["margin-top"].replace("%", "") / 100;
+    else if ((style["margin-top"] || "").includes("px")) topSpacing = style["margin-top"].replace("px", "");
+    else topSpacing = 0.12;
 
     let transform = {
         offsetX: 0,
@@ -122,16 +130,14 @@ thinui.dialog = function (options) {
                     // 动态适配对话框高度
                     let contentHeight = r.container.clientHeight,
                         docHeight = document.documentElement.clientHeight,
-                        avlHeight = docHeight * (1 - top * 2);
+                        avlHeight = docHeight * (1 - topSpacing * 2);
+                    console.log(contentHeight, docHeight, avlHeight);
                     if (contentHeight > avlHeight) contentHeight = avlHeight;
-                    r.container.style.marginTop = `${docHeight * top}px`;
                     r.container.style.maxHeight = `${avlHeight}px`;
                     document.body.style.overflow = "hidden";
                 }
             ],
-            style: {
-                width: `${width || "60%"}`
-            }
+            style: style
         },
         data: "",
         class: "dialog-in"

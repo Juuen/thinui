@@ -1,0 +1,502 @@
+// 公共样式定义
+:root {
+    --thin-brand-color: #409eff; //默认的主题色
+    --thin-border-color: #dcdcdc; //默认的边框色
+    --thin-text-color: #333; //默认文本颜色
+    --thin-text-color-alt: #fff;
+    --thin-mask-color: rgba(0, 0, 0, 0.6);
+    --thin-button-bg-color: #fff;
+    --thin-button-text-color: var(--thin-text-color);
+    --thin-table-bg-color: #fff;
+    --thin-table-border-color: #f5f5f5;
+    --thin-table-tr-bg-color: #fafafa;
+    --thin-table-tr-bg-color--hover: #f6f7fb;
+    --thin-pager-bg-color: #dcdcdc;
+    --thin-field-label-color: var(--thin-brand-color);
+}
+
+// thin-button
+button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    height: 32px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: var(--thin-button-text-color);
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.1s;
+    user-select: none;
+    -webkit-appearance: none;
+    background-color: var(--thin-button-bg-color);
+    border: 0.5px solid var(--thin-border-color);
+    padding: 8px 15px;
+    border-radius: 4px;
+    &:hover {
+        opacity: 0.7;
+    }
+    &:hover:not(.thin-button-primary) {
+        --thin-button-bg-color: #ecf5ff;
+        --thin-button-text-color: var(--thin-brand-color);
+    }
+}
+.thin-button-primary {
+    --thin-button-bg-color: var(--thin-brand-color);
+    --thin-button-text-color: #fff;
+    --thin-border-color: var(--thin-brand-color);
+}
+
+// hyperlink
+a {
+    color: var(--thin-brand-color);
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+        opacity: 0.7;
+    }
+    &:visited {
+        color: var(--thin-brand-color);
+    }
+}
+
+// input
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+textarea {
+    border: 0.5px solid var(--thin-border-color);
+    -webkit-appearance: none;
+    outline: none;
+    padding: 8px 6px;
+    &:focus {
+        border-color: var(--thin-brand-color);
+        transition: box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        box-shadow: inset 0 0 0.5px 0 var(--thin-brand-color);
+    }
+}
+
+// fork
+.fork {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    margin: 0 0 0 15px;
+    font-style: normal;
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        height: 12px;
+        width: 1px;
+        top: 1px;
+        left: 5px;
+        background: var(--thin-brand-color);
+    }
+    &::before {
+        transform: rotate(45deg);
+    }
+    &::after {
+        transform: rotate(-45deg);
+    }
+}
+
+// thin-dialog
+thinmask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: block;
+    background: var(--thin-mask-color);
+    height: 100%;
+    width: 100%;
+    z-index: 999999;
+    overflow: hidden;
+}
+
+thindialog {
+    display: flex;
+    flex-flow: column nowrap;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    & > * {
+        width: 100%;
+        display: block;
+        flex: 0 1 auto;
+    }
+    & > *:not(dlgbody) {
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+    }
+    dlghead {
+        border-bottom: 0.5px solid var(--thin-border-color);
+        justify-content: space-between;
+        flex: 0 0 auto;
+        height: 50px;
+
+        em {
+            font-style: normal;
+            font-size: 16px;
+        }
+        i {
+            @extend .fork;
+            width: 14px;
+            height: 14px;
+            &::before,
+            &::after {
+                height: 14px;
+            }
+        }
+    }
+    dlgbody {
+        min-height: 100px;
+        max-height: 600px;
+        padding: 15px;
+        overflow-y: auto;
+    }
+    dlgfoot {
+        justify-content: flex-end;
+        flex: 0 0 auto;
+        height: 60px;
+        & > button:first-child {
+            margin-right: 15px;
+        }
+    }
+}
+
+.dialog-in {
+    animation: modal-in 0.8s ease;
+}
+
+.dialog-out {
+    animation: modal-out 0.8s ease forwards;
+}
+
+@keyframes modal-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+    }
+}
+
+@keyframes modal-out {
+    0% {
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+// thin cond
+cond {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    margin-top: 15px;
+    conditem {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.5px solid var(--thin-border-color);
+        border-radius: 4px;
+        padding: 6px 10px;
+        margin: 0 10px;
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+
+        i {
+            @extend .fork;
+        }
+    }
+}
+
+//thin table
+table {
+    table-layout: auto;
+    overflow: hidden;
+    height: fit-content;
+    width: 100%;
+    max-width: 100%;
+    background: var(--thin-table-bg-color);
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+thead {
+    font-weight: 500;
+}
+
+tbody {
+    tr {
+        transition: background-color 0.2s ease;
+        &:nth-child(odd) {
+            background: var(--thin-table-tr-bg-color);
+        }
+        &:hover {
+            background: var(--thin-table-tr-bg-color--hover);
+        }
+    }
+}
+
+th,
+td {
+    text-align: left;
+    border-bottom: 0.5px solid var(--thin-table-border-color);
+    padding: 12px 8px;
+    &:hover:not(td) {
+        cursor: pointer;
+    }
+}
+
+// thin field
+fieldlist {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 100%;
+}
+field {
+    flex: 0 0 25%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-right: 15px;
+    label {
+        flex: 0 0 28%;
+        text-align: left;
+        padding-right: 6px;
+        color: var(--thin-field-label-color);
+        & + * {
+            flex: 0 0 70%;
+        }
+    }
+}
+
+fieldset {
+    margin: 15px 0;
+    padding: 15px;
+    border: 0.5px solid var(--thin-border-color);
+    border-radius: 2px;
+    &:first-child {
+        margin-top: 0;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+legend {
+    padding: 0 8px;
+}
+
+// 表单-单列
+fs {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    margin-bottom: 10px;
+    label {
+        margin: 10px 0;
+        color: #606266;
+    }
+    &:first-child {
+        label {
+            margin-top: 0;
+        }
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// 表单-多列
+flist {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    fs {
+        margin: 0 15px 15px 0;
+        min-width: 23%;
+        &:first-child {
+            label {
+                margin-top: 10px;
+            }
+        }
+        &:last-child {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+// thin tab
+taber {
+    display: block;
+}
+tablist {
+    display: flex;
+    border-bottom: 1px solid var(--thin-border-color);
+    flex-flow: row nowrap;
+    align-items: center;
+    tabitem {
+        padding: 0 20px;
+        flex: 0 1 auto;
+        height: 40px;
+        line-height: 40px;
+        vertical-align: middle;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-block;
+        transition: 0.1s;
+        &:hover {
+            color: var(--thin-brand-color);
+        }
+        &.active {
+            color: var(--thin-brand-color);
+            border-bottom: 1px solid var(--thin-brand-color);
+            font-weight: bold;
+        }
+    }
+}
+tabview {
+    display: block;
+    margin-top: 15px;
+}
+
+// 分页
+pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row nowrap;
+    width: 100%;
+    margin: 15px 0;
+    color: #606266;
+    & > i {
+        font-style: normal;
+    }
+    & > span {
+        input {
+            width: 3em;
+            margin-left: 10px;
+            height: 32px;
+            border-radius: 3px;
+            text-align: center;
+            color: #606266;
+        }
+    }
+    ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: row nowrap;
+        margin: 0 20px;
+    }
+    li {
+        padding: 0 4px;
+        margin: 0 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: var(--thin-pager-bg-color);
+        min-width: 32px;
+        height: 32px;
+        border-radius: 3px;
+
+        &.active {
+            background: var(--thin-brand-color);
+            color: #fff;
+            font-weight: bold;
+        }
+        &:hover:not(.active):not(.notallow) {
+            color: var(--thin-brand-color);
+        }
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+        &.notallow {
+            cursor: not-allowed;
+            background: #e6e8ea;
+            color: #c4c7cc;
+        }
+
+        i {
+            display: inline-block;
+            font-style: normal;
+            font-family: SimHei;
+            transform: scaleY(1.2);
+            font-weight: 100;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+}
+
+// 面包屑导航
+breadcrumb {
+    display: block;
+    i {
+        font-style: normal;
+        color: var(--thin-border-color);
+        margin: 0 10px;
+    }
+}
+
+// 下拉列表
+ddl {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    border: 0.5px solid var(--thin-border-color);
+    border-radius: 2px;
+}
+ddtitle {
+    padding: 9px;
+    &::after {
+        content: ">";
+        display: inline-block;
+        margin-left: 10px;
+        transform: scaleY(1.2) rotate(90deg);
+        font-family: SimHei;
+    }
+}
+ddlist {
+    display: none;
+    position: absolute;
+    border: 0.5px solid var(--thin-border-color);
+    background: #fff;
+    left: -1px;
+    z-index: 999;
+    flex-flow: column nowrap;
+    align-items: center;
+    transition: display 0.5s;
+    span {
+        display: block;
+        width: 100%;
+        padding: 12px 10px;
+        &:hover {
+            background: #ecf5ff;
+            color: var(--thin-brand-color);
+        }
+    }
+}
