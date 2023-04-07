@@ -10,7 +10,7 @@
  * @cancel       取消按钮回调函数。
  * @draggable    是否启用拖拽，默认为true。
  * @width        对话框宽度，默认为60%。
- * @top          对话框离顶部距离，支持%、px，默认为12%。
+ * @top          对话框离顶部距离，支持%、px，默认为10%。
  * @style        对话框css样式。
  */
 thinui.dialog = function (options) {
@@ -20,14 +20,14 @@ thinui.dialog = function (options) {
     if (!content || Object.prototype.toString.call(content) !== "[object Function]") throw "thin-dialog参数[content]为函数！";
     if (!container) container = document.body;
     if (!(draggable === false)) draggable = true;
+    if (!style) style = {};
 
-    style = style || {};
     style.width = width || style.width || "60%";
-    style["margin-top"] = top || style["margin-top"] || "12%";
+    style["margin-top"] = top || style["margin-top"] || "10%";
 
-    if ((style["margin-top"] || "").includes("%")) topSpacing = style["margin-top"].replace("%", "") / 100;
-    else if ((style["margin-top"] || "").includes("px")) topSpacing = style["margin-top"].replace("px", "");
-    else topSpacing = 0.12;
+    if (style["margin-top"].includes("%")) topSpacing = style["margin-top"].replace("%", "") / 100;
+    else if (style["margin-top"].includes("px")) topSpacing = style["margin-top"].replace("px", "");
+    else topSpacing = 0.1;
 
     let transform = {
         offsetX: 0,
@@ -131,7 +131,7 @@ thinui.dialog = function (options) {
                     let contentHeight = r.container.clientHeight,
                         docHeight = document.documentElement.clientHeight,
                         avlHeight = docHeight * (1 - topSpacing * 2);
-                    console.log(contentHeight, docHeight, avlHeight);
+
                     if (contentHeight > avlHeight) contentHeight = avlHeight;
                     r.container.style.maxHeight = `${avlHeight}px`;
                     document.body.style.overflow = "hidden";
