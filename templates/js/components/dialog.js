@@ -107,7 +107,7 @@ thinui.dialog = function (options) {
                                 a: { "data-title": `${(confirm || {}).title || "确定"}` },
                                 click: function (e) {
                                     e.close = dialogClose;
-                                    e.refresh = opButtonRefresh;
+                                    e.refresh = confirmButtonRefresh;
                                     e.sender.innerText = "处理中";
                                     e.sender.setAttribute("disabled", "");
                                     Object.prototype.toString.call(confirm) === "[object Function]" ? confirm(e) : confirm.finish && confirm.finish(e);
@@ -159,10 +159,10 @@ thinui.dialog = function (options) {
     }
 
     /**
-     * 刷新操作按钮
+     * 刷新确认按钮
      * @param {Event} e 触发关闭动作的事件源，可选。
      */
-    function opButtonRefresh(e) {
+    function confirmButtonRefresh(e) {
         let sender = (e && e.sender) || this.sender;
         sender.innerText = sender.dataset.title || sender.innerText;
         sender.removeAttribute("disabled");

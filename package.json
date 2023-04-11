@@ -1,6 +1,6 @@
 {
     "name": "thinui2",
-    "version": "0.1.15",
+    "version": "0.1.18",
     "description": "A UI framework for thinjs.",
     "main": "bin/thinui-cli.js",
     "preferGlobal": true,
