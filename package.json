@@ -1,6 +1,6 @@
 {
     "name": "thinui2",
-    "version": "0.1.18",
+    "version": "0.1.20",
     "description": "A UI framework for thinjs.",
     "main": "bin/thinui-cli.js",
     "preferGlobal": true,
@@ -13,6 +13,6 @@
     "author": "juuen",
     "license": "MIT",
     "dependencies": {
-        "minimist": "^1.2.6"
+        "minimist": "^1.2.8"
     }
 }
