@@ -33,7 +33,7 @@ main(options);
  * 定义主程序
  * @param {Array} argv
  */
-async function main(argv) {
+function main(argv) {
     if (argv["!"].length > 0) {
         console.error(`unknown option "${options["!"][0]}"`);
     } else if (argv.version) {
@@ -41,26 +41,33 @@ async function main(argv) {
     } else if (argv.help) {
         help();
     } else {
-        let projectPath = path.resolve("./");
-        if (!projectPath.endsWith("/")) projectPath = projectPath.concat("/");
+        doCLI();
+    }
+}
 
-        let thinDir = await checkThinDir(projectPath),
-            typesDir = projectPath.concat("node_modules/@types/thinui2"),
-            stylesDir = projectPath.concat("public/thinui"),
-            scriptDir = thinDir ? `${thinDir}/thinui` : `${projectPath}/thinbuilder/thinui`;
+/**
+ * 脚手架
+ */
+async function doCLI() {
+    let projectPath = path.resolve("./");
+    if (!projectPath.endsWith("/")) projectPath = projectPath.concat("/");
 
-        try {
-            await mkdir(scriptDir, { recursive: true, mode: MODE_0755 });
-            await loadTemplate(scriptDir);
+    let thinDir = await checkThinDir(projectPath),
+        typesDir = projectPath.concat("node_modules/@types/thinui2"),
+        stylesDir = projectPath.concat("public/thinui"),
+        scriptDir = thinDir ? `${thinDir}/thinui` : `${projectPath}/thinbuilder/thinui`;
 
-            await mkdir(stylesDir, { recursive: true, mode: MODE_0755 });
-            await loadStyles(stylesDir);
+    try {
+        await mkdir(scriptDir, { recursive: true, mode: MODE_0755 });
+        await loadTemplate(scriptDir);
 
-            await mkdir(typesDir, { recursive: true, mode: MODE_0755 });
-            await loadTypes(typesDir);
-        } catch (err) {
-            console.error(err);
-        }
+        await mkdir(stylesDir, { recursive: true, mode: MODE_0755 });
+        await loadStyles(stylesDir);
+
+        await mkdir(typesDir, { recursive: true, mode: MODE_0755 });
+        await loadTypes(typesDir);
+    } catch (err) {
+        console.error(err);
     }
 }
 
