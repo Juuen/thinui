@@ -4,7 +4,6 @@ const parseArgs = require("minimist");
 const path = require("path");
 const { mkdir, access, readdir, copyFile, cp } = require("fs/promises");
 const { constants } = require("fs");
-const { version } = require("process");
 
 const MODE_0666 = parseInt("0666", 8);
 const MODE_0755 = parseInt("0755", 8);
