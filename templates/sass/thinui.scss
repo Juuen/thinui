@@ -15,6 +15,12 @@
     --thin-field-label-color: var(--thin-brand-color);
 }
 
+// 初始化样式
+* {
+    box-sizing: border-box;
+    word-break: break-all;
+}
+
 // thin-button
 button {
     display: inline-flex;
