@@ -21,6 +21,13 @@
     word-break: break-all;
 }
 
+select {
+    background-color: var(--thin-button-bg-color);
+    border: 0.5px solid var(--thin-border-color);
+    outline: none;
+    padding: 8px 10px;
+}
+
 // thin-button
 button {
     display: inline-flex;
